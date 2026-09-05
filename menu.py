@@ -56,6 +56,7 @@ class MainMenu:
             Button("SETTINGS", 345, 330, 210, 60, "settings"),
             Button("EXIT GAME", 350, 420, 200, 60, "exit_game", color=(239, 68, 68), hover_color=(220, 38, 38)),
         ]
+
     # Draw the main menu on the screen
     def draw(self, screen, mouse_pos):
         screen.fill(BG_COLOR)
@@ -81,57 +82,68 @@ class MainMenu:
                 return button.action
         return None
 
-    # Functions for handling menu actions
+
+# Functions for handling menu actions
 def new_game():
     print("Starting a new game...")
+    return "new_game"
 
 
 def continue_game():
     print("Continuing saved game...")
+    return "continue_game"
 
 
 def open_settings():
     print("Opening settings...")
+    return "settings"
 
 
 def exit_game():
     print("Exiting game...")
-    pygame.quit()
-    sys.exit()
+    return "exit_game"
 
-    # Main function to run the menu
-def main():
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Frog Game Menu")
+
+def run_main_menu(screen):
     menu = MainMenu()
     clock = pygame.time.Clock()
 
-    running = True
-    while running:
+    while True:
         mouse_pos = pygame.mouse.get_pos()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-                break
+                return "exit_game"
 
             action = menu.handle_event(event)
             if action == "new_game":
                 new_game()
+                return "new_game"
             elif action == "continue_game":
                 continue_game()
+                return "continue_game"
             elif action == "settings":
                 open_settings()
+                return "settings"
             elif action == "exit_game":
                 exit_game()
-                running = False
+                return "exit_game"
 
         menu.draw(screen, mouse_pos)
         pygame.display.flip()
         clock.tick(60)
 
-    pygame.quit()
-    sys.exit()
+
+# Main function to run the menu
+def main():
+    pygame.display.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Frog Game Menu")
+
+    action = run_main_menu(screen)
+    if action == "exit_game":
+        pygame.quit()
+        sys.exit()
 
 
 if __name__ == "__main__":
