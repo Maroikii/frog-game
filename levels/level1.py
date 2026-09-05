@@ -1,6 +1,8 @@
 import random
 import pygame
 
+from characters import draw_frog, draw_fly
+
 # Level 1 of the Frog Game
 
 SCREEN_WIDTH = 900
@@ -65,19 +67,9 @@ def run_level(screen):
 
         screen.fill((120, 190, 120))
 
-        pygame.draw.circle(screen, (40, 160, 60), (frog_x, frog_y), frog_radius)
-        pygame.draw.circle(screen, (255, 255, 255), (frog_x - 15, frog_y - 20), 10)
-        pygame.draw.circle(screen, (255, 255, 255), (frog_x + 15, frog_y - 20), 10)
-        pygame.draw.circle(screen, (0, 0, 0), (frog_x - 15, frog_y - 20), 5)
-        pygame.draw.circle(screen, (0, 0, 0), (frog_x + 15, frog_y - 20), 5)
-
-        pygame.draw.circle(screen, (30, 30, 30), (fly_x, fly_y), fly_radius)
-        pygame.draw.circle(screen, (200, 200, 200), (fly_x - 7, fly_y - 6), 5)
-        pygame.draw.circle(screen, (200, 200, 200), (fly_x + 7, fly_y - 6), 5)
-
-        pygame.draw.circle(screen, (255, 0, 0), (red_fly_x, red_fly_y), red_fly_radius)
-        pygame.draw.circle(screen, (200, 200, 200), (red_fly_x - 7, red_fly_y - 6), 5)
-        pygame.draw.circle(screen, (200, 200, 200), (red_fly_x + 7, red_fly_y - 6), 5)
+        draw_frog(screen, frog_x, frog_y, frog_radius)
+        draw_fly(screen, fly_x, fly_y, fly_radius)
+        draw_fly(screen, red_fly_x, red_fly_y, red_fly_radius, color=(255, 0, 0))
 
         score_text = font.render(f"Fluer spist: {score}", True, (30, 30, 30))
         screen.blit(score_text, (10, 10))
