@@ -6,8 +6,8 @@ import levels.level1 as level1
 
 pygame.init()
 
-SCREEN_WIDTH = 900
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 800
 
 
 def main():

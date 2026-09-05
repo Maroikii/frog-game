@@ -2,7 +2,7 @@ import sys
 import pygame
 
 
-WIDTH, HEIGHT = 900, 600
+WIDTH, HEIGHT = 1200, 800
 BG_COLOR = (17, 24, 39)
 PANEL_COLOR = (22, 38, 57)
 BUTTON_COLOR = (34, 197, 94)
@@ -45,23 +45,23 @@ class Button:
             and self.rect.collidepoint(event.pos)
         )
 
-# Main menu class for the Frog Game
+# Main menu class for the Frog Game. Center the menu on the screen
 class MainMenu:
     def __init__(self):
         self.title_font = pygame.font.SysFont("arial", 64, bold=True)
         self.sub_font = pygame.font.SysFont("arial", 18)
         self.buttons = [
-            Button("NEW GAME", 325, 150, 250, 60, "new_game"),
-            Button("CONTINUE GAME", 300, 240, 300, 60, "continue_game"),
-            Button("SETTINGS", 345, 330, 210, 60, "settings"),
-            Button("EXIT GAME", 350, 420, 200, 60, "exit_game", color=(239, 68, 68), hover_color=(220, 38, 38)),
+            Button("NEW GAME", 475, 250, 250, 60, "new_game"),
+            Button("CONTINUE GAME", 450, 340, 300, 60, "continue_game"),
+            Button("SETTINGS", 495, 430, 210, 60, "settings"),
+            Button("EXIT GAME", 500, 520, 200, 60, "exit_game", color=(239, 68, 68), hover_color=(220, 38, 38)),
         ]
 
     # Draw the main menu on the screen
     def draw(self, screen, mouse_pos):
         screen.fill(BG_COLOR)
 
-        panel = pygame.Rect(180, 80, 540, 470)
+        panel = pygame.Rect(330, 150, 540, 470) 
         pygame.draw.rect(screen, PANEL_COLOR, panel, border_radius=30)
         pygame.draw.rect(screen, OUTLINE, panel, 3, border_radius=30)
 
@@ -69,9 +69,9 @@ class MainMenu:
         title_rect = title.get_rect(center=(WIDTH // 2, 95))
         screen.blit(title, title_rect)
 
-        subtitle = self.sub_font.render("Choose an option", True, (203, 213, 225))
-        subtitle_rect = subtitle.get_rect(center=(WIDTH // 2, 120))
-        screen.blit(subtitle, subtitle_rect)
+        # subtitle = self.sub_font.render("Choose an option", True, (250, 213, 225)) 
+        # subtitle_rect = subtitle.get_rect(center=(WIDTH // 2, 120)) # Fix for new screen size
+        # screen.blit(subtitle, subtitle_rect)
 
         for button in self.buttons:
             button.draw(screen, mouse_pos)
