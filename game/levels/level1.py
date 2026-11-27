@@ -1,3 +1,4 @@
+import asyncio
 import mechanics as mech
 
 
@@ -7,8 +8,8 @@ BG_COLOR = mech.BG_COLOR
 TEXT_COLOR = mech.TEXT_COLOR
 
 
-def run_level(screen):
-    return mech.run_level(
+async def run_level(screen):
+    return await mech.run_level(
         screen,
         level_name="Level 1",
         background_color=BG_COLOR,

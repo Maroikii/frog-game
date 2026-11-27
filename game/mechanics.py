@@ -1,5 +1,6 @@
 import math
 import random
+import asyncio
 import pygame
 
 from characters import draw_frog, draw_fly
@@ -11,7 +12,7 @@ BG_COLOR = (120, 190, 120)
 TEXT_COLOR = (30, 30, 30)
 
 
-def pause_menu(screen, font, width=SCREEN_WIDTH, height=SCREEN_HEIGHT):
+async def pause_menu(screen, font, width=SCREEN_WIDTH, height=SCREEN_HEIGHT):
     pause_text = font.render("Paused. Press 'ESC' to resume.", True, (0, 0, 0)) 
     text_rect = pause_text.get_rect(center=(width // 2, height // 2))
     screen.blit(pause_text, text_rect)
@@ -23,6 +24,8 @@ def pause_menu(screen, font, width=SCREEN_WIDTH, height=SCREEN_HEIGHT):
                 return "quit"
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return "resume"
+        
+        await asyncio.sleep(0)
 
 
 def spawn_fly(width=SCREEN_WIDTH, height=SCREEN_HEIGHT):
@@ -45,7 +48,7 @@ def move_frog(frog_x, frog_y, keys, speed=5):
     return frog_x, frog_y
 
 
-def run_level(screen, level_name="Level 1", background_color=BG_COLOR, text_color=TEXT_COLOR):
+async def run_level(screen, level_name="Level 1", background_color=BG_COLOR, text_color=TEXT_COLOR):
     pygame.display.set_caption(f"Frog Game - {level_name}")
 
     frog_x = SCREEN_WIDTH // 2
@@ -71,7 +74,7 @@ def run_level(screen, level_name="Level 1", background_color=BG_COLOR, text_colo
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
-            action = pause_menu(screen, font)
+            action = await pause_menu(screen, font)
             if action == "quit":
                 return "quit"
 
@@ -104,7 +107,7 @@ def run_level(screen, level_name="Level 1", background_color=BG_COLOR, text_colo
         if frog_radius >= 100:
             pygame.draw.circle(screen, (255, 0, 0), (int(frog_x), int(frog_y)), int(frog_radius))
             pygame.display.flip()
-            pygame.time.wait(1000)
+            await asyncio.sleep(1)
 
             frog_x = SCREEN_WIDTH // 2
             frog_y = SCREEN_HEIGHT // 2
@@ -130,8 +133,13 @@ def run_level(screen, level_name="Level 1", background_color=BG_COLOR, text_colo
                         fly_x, fly_y = spawn_fly()
                         red_fly_x, red_fly_y = spawn_fly()
                         score = 0
+                
+                await asyncio.sleep(0)
 
         pygame.display.flip()
+        clock.tick(60)
+        
+        await asyncio.sleep(0)
         clock.tick(60)
 
     return "quit"
